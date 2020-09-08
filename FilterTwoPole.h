@@ -60,7 +60,7 @@ struct FilterTwoPole {
 
   void print();
 
-  void test();
+  void test(float out);
 
 };
 

@@ -176,14 +176,13 @@ void FilterTwoPole::print() {
   Serial.print(" Vprev: ");    Serial.print( Vprev );
   Serial.println("");
 }
-
-void FilterTwoPole::test() {
+float FilterTwoPole::test(float out) {
   float updateInterval = .1;
   float nextupdateTime = 1e-6*float(micros());
 
   float inputValue = 0;
   FilterTwoPole osc( 0.2, 4, 0);
-
+  
   while( true ) {
     float now = 1e-6*float(micros());
 
@@ -194,8 +193,8 @@ void FilterTwoPole::test() {
       inputValue = 150;
 
     osc.input(inputValue);
-
-    analogWrite(10,osc.output() ); // hardcoded the dial pin
+    
+     out = osc.output();
 
     if( now > nextupdateTime ) {
       nextupdateTime += updateInterval;
