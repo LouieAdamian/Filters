@@ -176,32 +176,27 @@ void FilterTwoPole::print() {
   Serial.print(" Vprev: ");    Serial.print( Vprev );
   Serial.println("");
 }
-float FilterTwoPole::test(float out) {
-  float updateInterval = .1;
-  float nextupdateTime = 1e-6*float(micros());
 
-  float inputValue = 0;
-  FilterTwoPole osc( 0.2, 4, 0);
-  
-  while( true ) {
+
+float FilterTwoPole::test(FilterTwoPole::TestData td) {
     float now = 1e-6*float(micros());
 
     // switch input values on a 20 second cycle
     if( round(now/50.0)-(now/50.0) < 0 )
-      inputValue = 100;
+      td.inputValue = 100;
     else
-      inputValue = 150;
+      td.inputValue = 150;
 
-    osc.input(inputValue);
+    td.osc.input(td.inputValue);
     
-     out = osc.output();
+     out = td.osc.output();
 
-    if( now > nextupdateTime ) {
-      nextupdateTime += updateInterval;
+    if( now > td.nextupdateTime ) {
+      td.nextupdateTime += td.updateInterval;
 
-      Serial.print("inputValue: "); Serial.print( inputValue );
-      Serial.print("\t output: "); Serial.print( osc.output() );
+      Serial.print("inputValue: "); Serial.print( td.inputValue );
+      Serial.print("\t output: "); Serial.print( td.osc.output() );
       Serial.println();
     }
-  }
+    return out;
 }
