@@ -59,17 +59,6 @@ struct FilterTwoPole {
   float getMaxAmp();
 
   void print();
-    struct TestData{
-    float updateInterval = .1;
-    float nextupdateTime = 1e-6*float(micros());
-    float inputValue = 0;
-    FilterTwoPole osc( 0.2, 4, 0);   
-  }
-
-  float test(TestData td);
-
 };
-
-
 #endif
 
